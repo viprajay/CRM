@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+    data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>DIGIAFFECS CRM</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static '/assets/img/favicon/favicon.ico' %}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/remixicon/remixicon.css' %}" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/node-waves/node-waves.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+</head>
+
+<body class="container">
+
+    <!-- Layout wrapper -->
+    <div class=" layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <!-- Layout container -->
+            <div class="container mt-6">
+                <!-- Navbar -->
+
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar">
+
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <!-- Search -->
+
+                        <div class="navbar-nav align-items-center">
+                            <h3>DIGIAFFECS</h3>
+
+                        </div>
+                        <!-- /Search -->
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                            <!-- Place this tag where you want the button to render. -->
+                            <li class="nav-item lh-1 me-4">
+                                <a>{{emp.name}}</a>
+                            </li>
+
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="{{emp.img.url }}" alt class="w-px-35 rounded-circle" />
+                                    </div>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
+
+                                    <li>
+                                        <a class="dropdown-item">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <div class="avatar avatar-online">
+                                                        <img alt class="w-px-35 rounded-circle"
+                                                            src="{{emp.img.url }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-0 small">{{emp.name }}</h6>
+                                                    <small class="text-muted">Employee</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+
+                                    <li>
+                                        <div class="d-grid px-4 pt-2 pb-1">
+                                            <!-- <a class="ri-user-3-line ri-22px me-2 btn btn-danger d-flex" -->
+                                            <a class="btn btn-primary d-flex"
+                                                href="{% url 'employee_profile_update' %}">
+                                                <small class="align-middle">Update Profile</small>
+                                                <!-- <i class="ri-logout-box-r-line ms-2 ri-16px"></i> -->
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-grid px-4 pt-2 pb-1">
+                                            <a class="btn btn-danger d-flex" href="{% url 'employee_logout' %}">
+                                                <small class="align-middle">Logout</small>
+                                                <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+
+                </nav>
+                <!-- / Navbar -->
+                <style>
+                    .modal {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .modal-content {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        width: 400px;
+                    }
+
+                    .close-btn {
+                        float: right;
+                        cursor: pointer;
+                        font-weight: bold;
+                    }
+                </style>
+
+                <div id="employeeTask" class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn" onclick="closeModal()">&times;</span>
+                        <p><strong>Task: </strong><span id="title"></span></p>
+                        <p><strong>Deadline Date: </strong><span id="deadline"></span></p>
+                        <p><strong>Assign Date: </strong><span id="created_on"></span></p>
+                        <p><strong>Description: </strong><span id="description"></span></p>
+
+                    </div>
+                </div>
+
+                <script>
+                    function taskDetailModal(title, deadline, created_on, description) {
+                        document.getElementById('title').textContent = title;
+                        document.getElementById('deadline').textContent = deadline;
+                        document.getElementById('created_on').textContent = created_on;
+                        document.getElementById('description').textContent = description;
+                        document.getElementById('employeeTask').style.display = 'flex';
+                    }
+
+                    function closeModal() {
+                        document.getElementById('employeeTask').style.display = 'none';
+                    }
+                </script>
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="flex-grow-1">
+                        <div class="container">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="card mb-6">
+                                        <!-- Account -->
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-start align-items-sm-center gap-6">
+                                                <img src="{{emp.img.url}}" alt="user-avatar"
+                                                    class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
+                                                <div class="button-wrapper">
+                                                    <h3
+                                                        style="text-transform: uppercase; font-size: 20px; font-weight: bold;">
+                                                        {{emp.name}}
+                                                        <br>
+
+                                                    </h3>
+                                                    <p style="font-size: 17px; margin-top: -20px;">
+                                                        <strong>ID: </strong>{{emp.employee_id}}
+                                                    </p>
+                                                    <!-- <div><strong>Employee ID: </strong>{{emp.employee_id}}</div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Phone: </strong>{{emp.phone}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Email: </strong> {{emp.email}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Total Task: </strong> {{total_tasks}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Join Date: </strong> {{emp.join_date}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Salary: </strong>{{emp.salary}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Completed Task: </strong>{{completed_tasks}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Address: </strong>{{emp.address}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Designation: </strong>{{emp.designation}}</h6>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Running Task: </strong>{{running_tasks}}</h6>
+                                                    </div>
+                                                    <!-- <div class="col-md-4">
+                                                        <h6><strong>Total Task: </strong>{{total_tasks}}</h6>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <h6><strong>Completed Task: </strong>{{completed_tasks}}</h6>
+                                                    </div> -->
+                                                </div>
+                                                <div>
+                                                    <a href="{% url 'employee_profile_update' %}"
+                                                        class="btn btn-primary me-3">Update Profile</a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /Account -->
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-4"> -->
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="mb-1">Task Overview</h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body pt-lg-2">
+                                            {% comment %}
+                                            <div id="weeklyOverviewChart"></div>
+                                            {% endcomment %}
+                                            <canvas id="myTask" style="width: 100%; height: 233px; max-width: 600px">
+                                            </canvas>
+                                            <!-- <div class="mt-1">
+                                                <div class="d-grid mt-3 mt-md-4">
+                                                    <a class="btn btn-primary" href="{% url 'revenue' %}">Details
+                                                    </a>
+                                                </div>
+                                            </div> -->
+                                        </div>
+
+                                        {% comment %}
+                                        <canvas id="myTask" style="width: 100%; max-width: 600px"></canvas>
+                                        {% endcomment %}
+
+                                        <script>
+                                            const xValues = ["Total", "Completed", "Running"];
+                                            const yValues = ['{{ total_tasks }}', '{{ completed_tasks }}', '{{ running_tasks }}'];
+                                            const barColors = ["#007bff", "#28a745", "#ffc107"];
+
+                                            Chart.elements.Rectangle.prototype.draw = function () {
+                                                const ctx = this._chart.ctx;
+                                                const vm = this._view;
+                                                const left = vm.x - vm.width / 2;
+                                                const right = vm.x + vm.width / 2;
+                                                const top = vm.y;
+                                                const bottom = vm.base;
+                                                const radius = 10;
+
+                                                ctx.beginPath();
+                                                ctx.fillStyle = vm.backgroundColor;
+                                                ctx.moveTo(left, bottom);
+                                                ctx.lineTo(left, top + radius);
+                                                ctx.quadraticCurveTo(left, top, left + radius, top);
+                                                ctx.lineTo(right - radius, top);
+                                                ctx.quadraticCurveTo(right, top, right, top + radius);
+                                                ctx.lineTo(right, bottom);
+                                                ctx.closePath();
+                                                ctx.fill();
+                                            };
+
+                                            new Chart("myTask", {
+                                                type: "bar",
+                                                data: {
+                                                    labels: xValues,
+                                                    datasets: [{
+                                                        backgroundColor: barColors,
+                                                        data: yValues,
+                                                    }],
+                                                },
+                                                options: {
+                                                    legend: { display: false },
+                                                    scales: {
+                                                        yAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: true,
+                                                                stepSize: 1,
+                                                                precision: 0,
+                                                                callback: function (value) {
+                                                                    return Number.isInteger(value) ? value : null;
+                                                                }
+                                                            },
+                                                            gridLines: { display: false },
+                                                        }],
+                                                        xAxes: [{
+                                                            gridLines: { display: false },
+                                                        }],
+                                                    },
+                                                },
+                                            });
+                                        </script>
+
+
+                                    </div>
+                                </div>
+
+                                <style>
+                                    .modal {
+                                        display: none;
+                                        position: fixed;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        background-color: rgba(0, 0, 0, 0.5);
+                                        justify-content: center;
+                                        align-items: center;
+                                    }
+
+                                    .modal-content {
+                                        background-color: #fff;
+                                        padding: 20px;
+                                        border-radius: 10px;
+                                        width: 400px;
+                                    }
+
+                                    .close-btn {
+                                        float: right;
+                                        cursor: pointer;
+                                        font-weight: bold;
+                                    }
+                                </style>
+
+                                <div id="employeeModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close-btn" onclick="closeModal()">&times;</span>
+
+                                        <!-- <h3 id="project_name"></h3> -->
+
+                                        <p><strong>Task: </strong><span id="project_name"></span></p>
+                                        <p><strong>Deadline Date: </strong><span id="project_id"></span></p>
+                                        <p><strong>Assign Date: </strong><span id="client"></span></p>
+                                        <p><strong>Description: </strong><span id="work_on"></span></p>
+                                        <!-- <p><strong>Start Date: </strong><span id="start_date"></span></p>
+                                        <p><strong>Created On: </strong><span id="created_on"></span></p>
+                                        <p><strong>Status: </strong><span id="status"></span></p> -->
+
+                                    </div>
+                                </div>
+
+                                <script>
+                                    function taskDetailModal(project_name, project_id, client, work_on) {
+                                        document.getElementById('project_name').textContent = project_name;
+                                        document.getElementById('project_id').textContent = project_id;
+                                        document.getElementById('client').textContent = client;
+                                        document.getElementById('work_on').textContent = work_on;
+                                        // document.getElementById('start_date').textContent = start_date;
+                                        // document.getElementById('created_on').textContent = created_on;
+                                        // document.getElementById('status').textContent = status;
+                                        document.getElementById('employeeModal').style.display = 'flex';
+                                    }
+
+                                    function closeModal() {
+                                        document.getElementById('employeeModal').style.display = 'none';
+                                    }
+                                </script>
+                                <!-- </div> -->
+                            </div>
+                            <!-- Data Tables -->
+
+                            <div class="col-12 mt-2">
+
+                                <div class="card overflow-hidden">
+                                    <a>
+                                        <h5 class="card-header">Task Details</h5>
+                                    </a>
+                                    <div class="m-4">
+                                        <form method="get" class="d-flex gap-2">
+
+                                            <select style="border-color: #8c57ff; border-width: 2px;" name="status"
+                                                class="form-select" onchange="this.form.submit()">
+                                                <option value="">Filter</option>
+                                                <option value="completed">Completed</option>
+                                                <option value="pending">Running</option>
+                                            </select>
+                                            <noscript><button type="submit"
+                                                    class="btn btn-primary">Apply</button></noscript>
+                                        </form>
+                                    </div>
+                                    {% if tasks %}
+                                    <!-- <div class="m-4">
+                                        <form method="get" class="d-flex gap-2">
+
+                                            <select name="status" class="form-select" onchange="this.form.submit()">
+                                                <option value="">Filter</option>
+                                                <option value="completed">Completed</option>
+                                                <option value="pending">Pending</option>
+                                            </select>
+                                            <noscript><button type="submit"
+                                                    class="btn btn-primary">Apply</button></noscript>
+                                        </form>
+                                    </div> -->
+
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-truncate">S.No</th>
+                                                    <th class="text-truncate">Task</th>
+                                                    <th class="text-truncate">Description</th>
+                                                    <th class="text-truncate">Deadline Date</th>
+                                                    <th class="text-truncate">Assign Date</th>
+                                                    <th class="text-truncate">Status</th>
+                                                    <th class="text-truncate">View</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {% for dt in tasks %}
+                                                <tr>
+                                                    <td>{{forloop.counter}}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div>
+                                                                <h6 class="mb-0 text-truncate">
+                                                                    {{dt.title}}
+                                                                </h6>
+                                                                <!-- <small class="text-truncate">{{dt.project_id}}</small> -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-truncate">{{dt.description|slice:":50"}}...</td>
+                                                    <td class="text-truncate">{{dt.deadline}}</td>
+                                                    <td class="text-truncate">{{dt.created_on}}</td>
+                                                    <!-- <td class="text-truncate">{{dt.is_completed}}</td> -->
+                                                    <td>
+                                                        {% if dt.is_completed %}
+                                                        <span class="badge bg-success">Completed</span>
+                                                        {% else %}
+                                                        <span class="badge bg-warning">Running</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a style="color:white;"
+                                                            class="btn btn-sm btn-primary waves-effect waves-light"
+                                                            onclick="taskDetailModal('{{dt.title}}', '{{dt.deadline}}', '{{dt.created_on}}', '{{dt.description}}')">More
+                                                            Details</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% else %}
+                                    {% if filter_status == "completed" %}
+                                    <h1 class="ms-4">No completed task!</h1>
+                                    {% elif filter_status == "pending" %}
+                                    <h1 class="ms-4">No Running task!</h1>
+                                    {% else %}
+                                    <h1 class="ms-4">No task assigned!</h1>
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            <!--/ Data Tables -->
+                        </div>
+                    </div>
+                    <!-- / Content -->
+
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+                <!-- Footer -->
+                <footer class="content-footer footer bg-footer-theme">
+                    <div class="container-xxl">
+                        <div
+                            class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                            <div class="text-body mb-2 mb-md-0">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script>
+                                , made with
+                                <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span>
+                                by
+                                <a href="{% url 'index' %}" class="footer-link">DIGIAFFECS</a>
+                            </div>
+                            <div class="d-none d-lg-inline-block">
+                                <a href="{% url 'index' %}" class="footer-link me-4">License</a>
+                                <a href="{% url 'index' %}" class="footer-link me-4">Documentation</a>
+                                <a href="{% url 'index' %}" class="footer-link">Support</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- / Layout page -->
+
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+    </div>
+
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/node-waves/node-waves.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+
+    <!-- Place this tag before closing body tag for github widget button. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

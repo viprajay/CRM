@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default"
+    data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>
+        Update Profile
+    </title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon/favicon.ico' %}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/remixicon/remixicon.css' %}" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/node-waves/node-waves.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-auth.css' %}" />
+
+    <!-- Helpers -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    <script src="{% static 'assets/js/config.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Content -->
+    <div class="position-relative">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner py-6 mx-4">
+                <!-- Login -->
+
+                <div class="d-flex justify-content-center align-items-center" style="
+                 background-color: #f7f7fc;">
+                    <div class="card shadow p-4" style="width: 100%; max-width: 500px; border-radius: 20px;">
+
+                        <h4 class="text-center mb-4">Update Profile</h4>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label>Name: </label>
+                                <input type="text" class="form-control" value="{{ emp.name }}" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Change Password</label>
+                                <input type="text" name="password" class="form-control"
+                                    placeholder="Enter new password">
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Change Profile Image</label>
+                                <input type="file" name="img" class="form-control">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary d-grid w-100">Update</button>
+                        </form>
+
+                        <br>
+                        <a href="{% url 'employee_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+                    </div>
+                </div>
+
+                <!-- /Login -->
+                <img src="{% static 'assets/img/illustrations/tree-3.png' %}" alt="auth-tree"
+                    class="authentication-image-object-left d-none d-lg-block" />
+                <img src="{% static 'assets/img/illustrations/auth-basic-mask-light.png' %}"
+                    class="authentication-image d-none d-lg-block" height="172" alt="triangle-bg"
+                    data-app-light-img="{% static 'illustrations/auth-basic-mask-light.png' %}"
+                    data-app-dark-img="{% static 'illustrations/auth-basic-mask-dark.png' %}" />
+                <img src="{% static 'assets/img/illustrations/tree.png' %}" alt="auth-tree"
+                    class="authentication-image-object-right d-none d-lg-block" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/node-waves/node-waves.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag before closing body tag for github widget button. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

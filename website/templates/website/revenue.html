@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <!-- Revenue Summary Section -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-4 mt-2">
+                <div class="card border-info border-4 shadow-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="ri-wallet-3-line ri-32px text-info me-3"></i>
+                        <div>
+                            <h6 class="mb-1">Total Deposit</h6>
+                            <h5 class="text-info m-0">₹ {{total_deposit}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-2">
+                <div class="card border-danger border-4 shadow-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="ri-exchange-line ri-32px text-danger me-3"></i>
+                        <div>
+                            <h6 class="mb-1">Total Withdraw</h6>
+                            <h5 class="text-danger m-0">₹ {{total_withdraw}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-2">
+                <div class="card border-success border-4 shadow-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="ri-bar-chart-box-line ri-32px text-success me-3"></i>
+                        <div>
+                            <h6 class="mb-1">Net Revenue</h6>
+                            <h5 class="text-success m-0">₹ {{total_revenue}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-6">
+            <!-- Deposit / Withdraw -->
+            <div class="mt-6">
+                <div class="card-group">
+                    <div class="card mb-0">
+                        <div style="border-right: 10px solid #e6e5e8;" class="card-body card-separator">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                                <h5 class="m-0 me-2">Deposit</h5>
+                            </div>
+                            <div class="deposit-content pt-2">
+                                <ul class="p-0 m-0">
+                                    {% for dt in dep %}
+                                    <li class="d-flex mb-4 align-items-center pb-2">
+                                        <h6>{{forloop.counter}}.&nbsp;&nbsp; </h6>
+                                        <div class="flex-shrink-0 me-4">
+                                            <div class="avatar">
+                                                <div class="avatar-initial bg-info rounded shadow-xs">
+                                                    <i class="ri-wallet-3-line ri-24px"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-0">{{dt.name}}</h6>
+                                                <p class="mb-0">{{dt.created_on}}</p>
+                                            </div>
+                                            <h6 class="text-success mb-0">+&#8377; {{dt.pay}}</h6>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-0">
+                        <div class=" card-body">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                                <h5 class="m-0 me-2 ">Withdraw</h5>
+                            </div>
+                            <div class="withdraw-content pt-2">
+                                <ul class="p-0 m-0">
+                                    {% for dt in withdraw %}
+                                    <li class="d-flex mb-4 align-items-center pb-2">
+                                        <h6>{{forloop.counter}}.&nbsp;&nbsp; </h6>
+                                        <div class="flex-shrink-0 me-4">
+                                            <div class="avatar">
+                                                <div class="avatar-initial bg-warning rounded shadow-xs">
+                                                    <i class="ri-exchange-line ri-24px"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-0">{{dt.name}}</h6>
+                                                <p class="mb-0">{{dt.created_on}}</p>
+                                            </div>
+                                            <h6 class="text-danger mb-0">-&#8377; {{dt.amount}}</h6>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Deposit / Withdraw -->
+        </div>
+    </div>
+    <!-- End Revenue Summary -->
+
+
+</div>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends "base.html" %} {% load static %}{% block content %}
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+    }
+
+    .close-btn {
+        float: right;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+
+<div id="employeeModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3 style="text-align:center;" id="name"></h3>
+        <p><strong>ID: </strong><span id="client_id"></span></p>
+        <p><strong>Service: </strong><span id="service"></span></p>
+        <p><strong>Phone: </strong><span id="phone"></span></p>
+        <p><strong>Email: </strong><span id="email"></span></p>
+        <p><strong>Address: </strong><span id="address"></span></p>
+        <p><strong>Pincode: </strong><span id="pincode"></span></p>
+        <p><strong>Client Add Data: </strong><span id="created_on"></span></p>
+    </div>
+</div>
+
+<script>
+    function openModal(name, client_id, service, phone, email, address, pincode, created_on) {
+        document.getElementById('name').textContent = name;
+        document.getElementById('client_id').textContent = client_id;
+        document.getElementById('service').textContent = service;
+        document.getElementById('phone').textContent = phone;
+        document.getElementById('email').textContent = email;
+        document.getElementById('address').textContent = address;
+        document.getElementById('pincode').textContent = pincode;
+        document.getElementById('created_on').textContent = created_on;
+
+        document.getElementById('employeeModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('employeeModal').style.display = 'none';
+    }
+</script>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row gy-6">
+            <!-- Data Tables -->
+            <div class="col-12">
+                <div class="card overflow-hidden">
+                    <h5 class="card-header">Client Details</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-truncate">S.No</th>
+                                    <th class="text-truncate">Name/ID</th>
+                                    <th class="text-truncate">Phone</th>
+                                    <th class="text-truncate">Service</th>
+                                    <th class="text-truncate">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dt in client %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <h6 class="mb-0 text-truncate">
+                                                    {{dt.name}}
+                                                </h6>
+                                                <small class="text-truncate">{{dt.client_id}}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-truncate">{{dt.phone}}</td>
+                                    <td class="text-truncate">{{dt.service}}</td>
+                                    <td>
+                                        <a style="color:white;" class="btn btn-sm btn-primary waves-effect waves-light"
+                                            onclick="openModal('{{dt.name}}', '{{dt.client_id}}', '{{dt.service}}', '{{dt.phone}}', '{{dt.email}}', '{{dt.address}}', '{{dt.pincode}}', '{{dt.created_on}}')">More
+                                            Details</a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--/ Data Tables -->
+        </div>
+    </div>
+    <!-- / Content -->
+
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+{% endblock content %}
